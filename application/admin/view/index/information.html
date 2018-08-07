@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>添加资讯</title>
+	<link rel="stylesheet" href="/admin/css/base.css">
+	<link rel="stylesheet" href="/admin/css/page.css">
+	<!--[if lte IE 8]>
+	<link href="css/ie8.css" rel="stylesheet" type="text/css"/>
+	<![endif]-->
+	<script type="text/javascript" src="/admin/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/admin/js/main.js"></script>
+	<script type="text/javascript" src="/admin/js/modernizr.js"></script>
+</head>
+<body>
+	<div class="pubMain">
+		<a href="javascript:history.go(-1)" class="backlistBtn"><i class="ico-back"></i>返回列表</a>
+		<form action="{:url('index/information_add')}" method="post">
+			<h5 class="pubtitle">资讯标题</h5>
+			<div class="pub-txt-bar">
+				<input type="text" class="shuruTxt" name="title">
+			</div>
+			<h5 class="pubtitle">资讯内容</h5>
+			<div class="pub-area-bar">
+				<textarea name="content" rows="" cols="3"></textarea>
+			</div>
+			
+			
+			<div class="pub-btn">
+				<input type="submit" id="" value="发布" class="saveBtn">
+			</div>
+		</form>
+	</div>
+</body>
+</html>

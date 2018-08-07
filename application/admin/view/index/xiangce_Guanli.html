@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d"><head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>资讯管理</title>
+	<link rel="stylesheet" href="/admin/css/base.css">
+	<link rel="stylesheet" href="/admin/css/page.css">
+	<!--[if lte IE 8]>
+	<link href="css/ie8.css" rel="stylesheet" type="text/css"/>
+	<![endif]-->
+	<script type="text/javascript" src="/admin/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/admin/js/main.js"></script>
+	<script type="text/javascript" src="/admin/js/modernizr.js"></script>
+	<!--[if IE]>
+	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+
+</head>
+<style type="text/css">
+        .text-l{
+            text-align: center;
+        }
+        .pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}
+        .pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}
+        .pagination .active{background-color: #dd1a20;color: #fff;}
+        .pagination .disabled{color:#aaa;}
+    </style>
+<body style="background: #f6f5fa;">
+
+	<!--content S-->
+	<div class="super-content RightMain" id="RightMain">
+		
+		<!--header-->
+		<div class="superCtab">
+			
+			<div class="ctab-title clearfix">
+				<h3>资讯管理</h3>
+				<div class="tbkaig"><span>同步开关</span><input type="checkbox" id="checkbox_d0" class="chk_4"><label for="checkbox_d0"></label></div>
+			</div>
+			
+			<div class="ctab-Main">				
+				<div class="ctab-Mian-cont">
+					<div class="xc-btn-bar">
+						<a href="{:url('index/information')}" class="greenbtn sp-add xc-add"><i class="ico-add"></i>添加资讯</a>
+					</div>
+					<table border="0" cellspacing="0" cellpadding="0" class="defaultTable defaultTable2">
+							<tbody>
+							<?php foreach ($data as $key => $value): ?>
+								<tr>
+								<td class="t_1"><?=$value['title']?></td>
+								<td class="t_2_1"><a href="huodong_content.html"><?=$value['content']?></a></td>
+								<td class="t_3"><?=$value['time']?></td>
+								<td class="t_5">本站原创</td>
+								<td class="t_4"><div class="btn"><a class="Top">置顶</a>
+								<a href="updates?id=<?=$value['id']?>" class="modify">修改</a><a href="deletes?id=<?=$value['id']?>" class="delete">删除</a></div></td>
+							</tr>
+							<?php endforeach ?>
+							</tbody>
+							</table>
+					
+					</div>
+					<!--pages S-->
+					{$page}
+					<!--pages E-->
+				</div>
+			</div>
+		</div>
+		<!--main-->
+	</div>
+	<!--content E-->
+</body></html>

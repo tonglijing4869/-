@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d"><head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>品牌管理</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="/admin/css/base.css">
+	<link rel="stylesheet" href="/admin/css/page.css">
+	<!--[if lte IE 8]>
+	<link href="css/ie8.css" rel="stylesheet" type="text/css"/>
+	<![endif]-->
+	<script type="text/javascript" src="/admin/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/admin/js/main.js"></script>
+	<script type="text/javascript" src="/admin/js/modernizr.js"></script>
+	<!--[if IE]>
+	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<style>
+	table {width:100%;background:#ccc; margin: 10px auto;border-collapse:collapse;}
+/*border-collapse:collapse合并内外边距(去除表格单元格默认的2个像素内外边距*/
+  td {height:25px;line-height:25px;text-align:center;border:1px solid #ccc;}
+ th {background:#eee;font-weight:normal;}
+ tr {background:#fff;}
+ tr:hover {background:#cc0;}
+ td a {color:#06f;text-decoration:none;}
+ td a:hover {color:#06f;text-decoration:underline;} 
+ #shan {margin-top: 70px;background-color:red;}
+</style>
+<body style="background: #f6f5fa;">
+
+	<!--content S-->
+	<div class="super-content">
+		<div class="superCtab">
+			<div class="ctab-title clearfix" >
+			<a href="" class="sp-column" id="shan" onclick="tishi()"><i class="ico-mng"></i>一键删除</a>
+			</div>
+			
+			<div class="ctab-Main">
+				<div class="ctab-Main-title">
+					<ul class="clearfix">
+						<li class="cur"><a href="{:url('admin/index/brandGuan')}">查看品牌</a></li>
+						<li><a href="{:url('admin/index/addBrand')}">新增品牌</a></li>
+					</ul>
+				</div>
+				
+				<div class="ctab-Mian-cont">
+				<table border="1">
+					<tr>
+					
+						<td><input type="checkbox" id="qx" onclick="xuanzhong()">全选品牌id</td>
+						<td>品牌名称</td>
+						<td>是否启用</td>
+						<td>品牌logo</td>
+						<td>品牌介绍</td>
+						<td>创建时间</td>
+						<td>操作</td>
+					</tr>
+					<?php foreach ($data as $key => $value) { ?>
+					<tr>
+						<td><input type="checkbox" class="ck" name="ck[]" value="<?php echo $value['brand_id'] ?>"> <?php echo $value['brand_id'] ?></td>
+						<td><?php echo $value['brand_name'] ?></td>
+						<td><?php echo $value['is_show'] ?></td>
+						<td><img src="__ROOT__/{$value['brand_img']}" alt="" width="100px" height="100px" class="img-circle"></td>
+						<td><?php echo $value['brand_desc'] ?></td>
+						<td><?php echo $value['create_time'] ?></td>
+						<td><a href="del?id=<?php echo $value['brand_id'] ?>">删除</a>|<a href="update?id=<?php echo $value['brand_id'] ?>">修改</a></td>
+					</tr>	
+					<?php } ?>
+					
+				</table>
+				<center><?php echo $data->render() ?></center>
+					
+		</div>
+		<!--main-->		
+	</div>
+</body>
+<script src="/public/js/jq.js"></script>
+<script>
+	function xuanzhong(){
+		var qx = document.getElementById('qx');
+		var fx = document.getElementsByClassName("ck");
+		for (var i = 0; i <fx.length; i++) {
+			if(qx.checked){
+				fx[i].setAttribute("checked","checked");
+			}else{
+				fx[i].removeAttribute("checked");
+			}
+		}
+	}	
+	function tishi(){
+		var qx = document.getElementsByClassName("ck");
+		var str="";
+		for(var i=0;i<qx.length;i++){
+			if(qx[i].checked){
+				str+=","+qx[i].value;
+			}
+		}
+		 if(str == ""){
+        	alert('请选择删除项');
+        	return false;
+        }
+		var id=str.substr(1);//把最前面的逗号截去，剩下完整的id
+		console.log(id);
+	    var a=confirm('你确定删除吗？');
+        if(!a){
+            return false;
+        }
+        $.ajax({
+        	url:"del",
+        	data:{id:id},
+        	type:"get",
+        	dataType:'json',
+        	success:function(res){
+        		if(res>0){
+                    alert('删除成功');
+                    window.location.href="brandGuan";      
+            }
+        	}
+        })
+
+	}	
+</script>
+</html>

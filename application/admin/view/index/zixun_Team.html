@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d"><head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>管理员添加</title>
+	<link rel="stylesheet" href="/admin/css/base.css">
+	<link rel="stylesheet" href="/admin/css/page.css">
+	<!--[if lte IE 8]>
+	<link href="css/ie8.css" rel="stylesheet" type="text/css"/>
+	<![endif]-->
+	<script type="text/javascript" src="/admin/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/admin/js/main.js"></script>
+	<script type="text/javascript" src="/admin/js/modernizr.js"></script>
+	<!--[if IE]>
+	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+
+<body style="background: #f6f5fa;">
+	<!--content S-->
+	<div class="super-content">
+		<div class="superCtab">
+			<div class="ctab-title clearfix"><h3>添加管理</h3></div>
+		</div>
+		<!--main-->
+	<form action="{:url('admin/index/addadmin')}" method="post">
+		<table border="0" cellspacing="0" cellpadding="0" class="defaultTable defaultTable2">
+			<tbody>
+				<tr>
+					<td class="t_1">用户名：</td>
+					<td class="t_4"><input type="text" name="name"></td>
+				</tr>
+				<tr>
+					<td class="t_1">密码：</td>
+					<td class="t_4"><input type="password" name="password"></td>
+				</tr>
+				<tr>
+					<td class="t_1">确认密码：</td>
+					<td class="t_4"><input type="password" name="password2"></td>
+				</tr>
+			</tbody>
+		</table>
+		<center>
+			<div class="pub-btn">
+				<input type="submit" value="注册" class="saveBtn">
+			</div>
+		</center>
+	</form>
+	</div>
+	<!--content E-->
+</body></html>

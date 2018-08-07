@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d"><head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>商品展示</title>
+	<style>
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: "微软雅黑";
+			}
+			.avatar {
+				display: block;
+				width: 90px;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+			
+			.avatar img {
+				display: block;
+				border: 0;
+				width: 100%;
+				transform: scale(1);
+				transition: all 1s ease 0s;
+				-webkit-transform: scale(1);
+				-webkit-transform: all 1s ease 0s;
+			}
+			
+			.avatar:hover img {
+				transform: scale(1.3);
+				transition: all 1s ease 0s;
+				-webkit-transform: scale(1.3);
+				-webkit-transform: all 1s ease 0s;
+			}
+
+		</style>
+	<link rel="stylesheet" href="/admin/css/base.css">
+	<link rel="stylesheet" href="/admin/css/page.css">
+	<!--[if lte IE 8]>
+	<link href="css/ie8.css" rel="stylesheet" type="text/css"/>
+	<![endif]-->
+	<script type="text/javascript" src="/admin/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/admin/js/main.js"></script>
+	<script type="text/javascript" src="/admin/js/modernizr.js"></script>
+	<!--[if IE]>
+	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+
+<body style="background: #f6f5fa;">
+	<!--content S-->
+	<div class="super-content RightMain" id="RightMain">
+		<!--header-->
+		<div class="superCtab">
+		<div class="ctab-title clearfix"><h3>商品展示</h3></div>
+			<div class="ctab-Main">
+				<div class="ctab-Main-title">
+					<ul class="clearfix">
+						<li class="cur"><a href="wenzhang_xinwen.html">商品详情</a></li>
+						<!-- <li><a href="wenzhang_kehu.html">客户见证</a></li>
+						<li><a href="wenzhang_remen.html">热门产品</a></li> -->
+						<!-- <li><a href="wenzhang_aboutus.html">关于我们</a></li>
+						<li><a href="wenzhang_lianxi.html">联系方式</a></li> -->
+					</ul>
+				</div>
+				<div class="ctab-Mian-cont">
+					<div class="Mian-cont-btn clearfix">
+						<div class="operateBtn">
+							<a href="{:url('admin/index/wenzhang_add')}" class="greenbtn publish">添加商品</a>
+							<a href="javascript:;" class="greenbtn add sp-add">添加分类</a>
+						</div>
+						<div class="searchBar">
+							<input type="text" id="" value="" class="form-control srhTxt" placeholder="输入标题关键字搜索">
+							<input type="button" class="srhBtn" value="">
+						</div>
+					</div>
+					<div class="super-label clearfix">	
+					</div>
+					<div class="Mian-cont-wrap">
+						<div class="defaultTab-T">
+							<table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+								<tbody><tr><th class="t_1">商品图片</th><th class="t_1">商品名称</th>
+								<th class="t_1">商品价格</th><th class="t_1">商品单位</th><th class="t_1">商品库存</th><th class="t_1">上架/下架</th><th class="t_1">商品热销</th><th class="t_1">发布时间</th><th class="t_4">操作</th></tr>
+							</tbody></table>
+						</div>
+						<table border="0" cellspacing="0" cellpadding="0" class="defaultTable defaultTable2">
+							<tbody>
+							{foreach $data as $v}
+							<tr>
+								<!-- <td class="t_1">
+								<a href="" class="avatar">
+								<img src="{$v.goods_img}" width="90" height="65"/></a>
+								</td> -->
+								<td class="t_1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_name}</a></td>
+								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_price}</td>
+								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_unit}</td>
+								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_nums}</td>
+
+								<td class="t_1">
+								<span><input type="checkbox" id="checkbox_d3" class="chk_4" checked=""><label for="checkbox_d3"></label></span>
+							
+								</td>
+
+
+								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;
+								<span><input type="checkbox" id="checkbox_d3" class="chk_4" checked=""><label for="checkbox_d3"></label></span>
+								</td>
+
+
+								<td class="t_1"><?php echo date('Y-m-d H:i:s',$v['goods_time'])?></td>
+								<td class="t_4"><div class="btn">
+								<a class="Top">置顶</a>
+								<a href="javascript:;" class="modify">修改</a>
+								<a href="{:url('admin/index/adminDel')}" class="delete" id='{$v.goods_id}' name="del">删除</a>
+								</div></td>
+							</tr>
+							{/foreach}	
+						</tbody></table>
+						<!--pages S-->
+						<div class="pageSelect">
+		
+							{$data->render()}
+						
+						</div>
+						<!--pages E-->
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		<!--main-->
+	</div>
+	<!--content E-->
+	
+	<div class="layuiBg"></div><!--公共遮罩-->
+	<!--点击修改弹出层-->
+	
+	<!--点击添加分类弹出-->
+	<div class="addFeileibox layuiBox">
+		<div class="layer-title clearfix"><h2>添加分类</h2><span class="layerClose"></span></div>
+		<div class="layer-content">
+			<div class="aFllink clearfix"><span>上级栏目：</span><h5>商品分类</h5></div>
+			<div class="aFllink clearfix"><span>二级栏目：</span><input type="text" value=""></div>
+			<div class="aFlBtn"><input type="button" value="保存" class="saveBtn"></div>
+		</div>
+	</div>
+
+<script type="text/javascript" src="/admin/js/zxxFile.js"></script>
+<script>
+	// $("a[name=del]").on('click',function(){
+ //    if (confirm('确定要删除么')) {
+ //      var id = $(this).attr("id");
+ //      $(window).attr('location',"/admin/index/goodsdel?id="+id)
+ //      //window.location.href();
+ //    };
+ //  })
+
+</script>
+
+</body></html>

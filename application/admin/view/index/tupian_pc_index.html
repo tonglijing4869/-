@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>文章发布</title>
+	<link rel="stylesheet" href="/admin/css/base.css">
+	<link rel="stylesheet" href="/admin/css/page.css">
+	<!--[if lte IE 8]>
+	<link href="css/ie8.css" rel="stylesheet" type="text/css"/>
+	<![endif]-->
+	<script type="text/javascript" src="/admin/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/admin/js/main.js"></script>
+	<script type="text/javascript" src="/admin/js/modernizr.js"></script>
+	<!--[if IE]>
+	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+</head>
+<style type="text/css">
+        .text-l{
+            text-align: center;
+        }
+        .pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}
+        .pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}
+        .pagination .active{background-color: #dd1a20;color: #fff;}
+        .pagination .disabled{color:#aaa;}
+    </style>
+<body>
+	<div class="defaultTab-T">
+		<table border="0" cellspacing="0" cellpadding="0" class="defaultTable">
+			<tbody>
+				<tr>
+					<th class="t_1">条数</th>
+					<th class="t_1">姓名</th>
+					<th class="t_1">电话</th>
+					<th class="t_1">联系时间</th>
+					<th class="t_1">留言内容</th>
+					<th class="t_1">是否批发</th>
+					<th class="t_1">留言时间</th>
+					<th class="t_1">操作</th>
+				</tr>
+				<?php foreach($data as $key=>$vo){?>
+
+ 				<tr> 
+ 					<td class="t_1">{$vo.id}</td> 
+					<td class="t_1">{$vo.name}</td>
+					<td class="t_1">{$vo.telephone}</td>
+					<td class="t_1">{$vo.contact_time}</td>
+					<td class="t_1">{$vo.leave_message}</td>
+
+					<td class="t_1">{if condition="$vo.is_retail eq 1"}批发{else /} 零售{/if}</td>
+					<td class="t_1">{$vo.datetime}</td>
+       				<td class="delete"><button  class="del" id="{$vo.id}">删除</button></td>
+		            </tr>
+				<?php }?>	
+			</tbody>
+		</table>
+		{$page}
+	</div>
+
+	
+</body>
+</html>
+<script src="/jq.js"></script>
+<script>
+$(".del").click(function()
+{
+	var id = $(this).attr('id');
+	var obj=$(this);
+	 $.ajax({
+             type: "GET",
+             url: "__ROOT__/index.php/admin/index/tupian_pc_del",
+             data: {id:id},
+             dataType: "json",
+             success: function(data){
+                  if (data['status']=="1") {
+                  	obj.parents("tr").remove();
+                  	alert("删除成功");
+                  }
+                  else{
+                  	alert("删除失败");
+                  }     
+               }
+         });
+});
+
+
+</script>
+ 
+

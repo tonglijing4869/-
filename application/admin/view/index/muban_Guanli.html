@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d"><head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>资讯管理</title>
+	<link rel="stylesheet" href="/admin/css/base.css">
+	<link rel="stylesheet" href="/admin/css/page.css">
+	<!--[if lte IE 8]>
+	<link href="css/ie8.css" rel="stylesheet" type="text/css"/>
+	<![endif]-->
+	<script type="text/javascript" src="/admin/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/admin/js/main.js"></script>
+	<script type="text/javascript" src="/admin/js/modernizr.js"></script>
+	<!--[if IE]>
+	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+
+</head>
+<style type="text/css">
+        .text-l{
+            text-align: center;
+        }
+        .pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}
+        .pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}
+        .pagination .active{background-color: #dd1a20;color: #fff;}
+        .pagination .disabled{color:#aaa;}
+    </style>
+<body style="background: #f6f5fa;">
+
+	<!--content S-->
+	<div class="super-content RightMain" id="RightMain">
+		
+		<!--header-->
+		<div class="superCtab">
+			
+			<div class="ctab-title clearfix">
+				<h3>管理员列表</h3>
+				<div class="tbkaig"><span>同步开关</span><input type="checkbox" id="checkbox_d0" class="chk_4"><label for="checkbox_d0"></label></div>
+			</div>
+			
+			<div class="ctab-Main">				
+				<div class="ctab-Mian-cont">
+					<div class="xc-btn-bar">
+						<a href="{:url('index/zixun_team')}" class="greenbtn sp-add xc-add"><i class="ico-add"></i>添加管理</a>
+					</div>
+					<table border="0" cellspacing="0" cellpadding="0" class="defaultTable defaultTable2">
+							<tbody>
+							{foreach name="show" item="v" }
+								<tr>
+								<td class="t_1">{$v['id']}</td>
+								<td class="t_2_1"><a href="huodong_content.html">{$v['name']}</a></td>
+								<td class="t_5">
+								{if condition="$v.is_show eq '1'"}
+									<span style="color:green" val="{$v['id']}">√</span>
+								{else /}
+									<span style="color:#F00"  val="{$v['id']}">×</span>
+								{/if}
+								</td>
+								<td class="t_4"><div class="btn">								<a href="" class="modify">修改</a><a href=">" class="delete">删除</a></div></td>
+							</tr>
+							{/foreach}
+							</tbody>
+							</table>
+					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body></html>
+<script src="/admin/js/jquery.js"></script>
+<script>
+	$(document).on('click','.t_5',function(){
+		var obj = $(this);
+		var status  = obj.children('span').text();
+		var id  = obj.children('span').attr('val'); 
+		$.ajax({
+			url:"{:url('admin/index/ajax_save')}",
+			data:{status:status,id:id},
+			dataType:'json',
+			success:function(result)
+			{
+				console.log(result);
+				if (result.statu == 'true') {
+					obj.children('span').html('<span style="color:#F00" val="'+id+'">×</span>');
+				} else {
+					obj.children('span').html('<span style="color:green" val="'+id+'">√</span>');
+				}
+			}
+		})
+	})
+</script>

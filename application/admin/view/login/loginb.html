@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>用户登录</title>
+	<link rel="stylesheet" href="/admin/css/base.css" />
+	<link rel="stylesheet" href="/admin/css/login.css" />
+	<style>
+        .loginbtn{width: 80px;height: 35px;font-size: 16px;color:#fff;}
+        .resetbtn{width: 80px;height: 35px;font-size: 16px;color:#fff;}
+        .captcha{width: 106px;height: 35px;}
+	</style>
+</head>
+<body>
+<div class="superlogin"></div>
+<div class="loginBox">
+	<div class="loginMain">
+		<div class="tabwrap">
+		 <form action="{:url('admin/login/loginbDo')}" method="post">
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td class="title">用户名：</td>
+				<td><input type="text" name="name" class="form-control txt" value="{$Think.cookie.all['name']}" /></td>
+			</tr>
+			<tr>
+				<td class="title">密   码：</td>
+				<td><input type="password" name="password" class="form-control txt"  value="{$Think.cookie.allp['password']}" /></td>
+			</tr>
+			<tr><td class="title">验证码：</td>
+			    <td>
+			        <input type="text" name="authcode" class="form-control txt txt2" />
+			        <span class="yzm">
+	                   <img src="{:url('Login/verify')}" alt="captcha" class="captcha" id="captcha" onclick="document.getElementById('captcha').src='http://www.fristpj.com/admin/login/verify/r/'+Math.random()" />
+				    </span>
+			    </td>
+			</tr>
+			<tr class="errortd" >
+				<td>&nbsp;</td>
+				<td>
+				<span class="errorword"></span>
+				</td>
+			</tr>		
+			<tr><td>&nbsp;</td>
+			<td>
+			<input type="submit" class="loginbtn" value="登录" />
+			<input type="reset" class="resetbtn" value="重置" />
+			</td></tr>		
+			<tr><td>&nbsp;</td><td class="forgetpsw"></td></tr>	
+		</table>
+
+        </form>
+
+		</div>
+	</div>
+</div>
+<div class="footer">Copyright © 2016-2017 jianet  All Rights Reserved.</div>
+</body>
+</html>
