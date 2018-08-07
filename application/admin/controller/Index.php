@@ -440,13 +440,13 @@ class Index extends Controller
 	{
 		$request = Request::instance();
 		$file = $request->file('brand_img');
+		$data = $request->post();
 		if (!empty($file)) {
 			$move = $file->move('uploads');
 			$name = $move->getSaveName();
 			$imgp = str_replace("\\", '/', $name);
 			$data['brand_img'] = "uploads/".$imgp;
 		}
-		$data = $request->post();
 		$id = $data['brand_id'];
 		$time = date("Y-m-d H:i:s");
 		$data['create_time'] = $time;
