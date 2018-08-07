@@ -148,6 +148,46 @@ class Index extends Controller
 
 	}
 
+
+	/**
+	 *@content 后台商品上架状态--即点即改
+	 *@return  json
+	 *@author  童立京
+	 *time     2018/8/7
+	 */
+	public function goodsSave()
+	{
+		$id = $this->request->get('id');
+		$status = $this->request->get('status');
+		if ($status == '×') {
+			$result = Db::table('grx_goods')->where('goods_id',$id)->update(['goods_status' => '1']);
+			echo json_encode(array('statu'=>'false','mesg'=>'修改成功'));
+		} else {
+			$result = Db::table('grx_goods')->where('goods_id',$id)->update(['goods_status' => '0']);
+			echo json_encode(array('statu'=>'true','mesg'=>'修改成功'));
+		} 
+	}
+
+
+	/**
+	 *@content 后台商品热卖状态--即点即改
+	 *@return  json
+	 *@author  童立京
+	 *time     2018/8/7
+	 */
+	public function goodsSaverm()
+	{
+		$id = $this->request->get('id');
+		$status = $this->request->get('status');
+		if ($status == '×') {
+			$result = Db::table('grx_goods')->where('goods_id',$id)->update(['is_hot' => '1']);
+			echo json_encode(array('statu'=>'false','mesg'=>'修改成功'));
+		} else {
+			$result = Db::table('grx_goods')->where('goods_id',$id)->update(['is_hot' => '0']);
+			echo json_encode(array('statu'=>'true','mesg'=>'修改成功'));
+		} 
+	}
+
 	/**
 	 *@content 后台页面 ---品牌管理
 	 *@return  mixed

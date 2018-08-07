@@ -96,15 +96,22 @@
 								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_price}</td>
 								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_unit}</td>
 								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_nums}</td>
-
-								<td class="t_1">
-								<span><input type="checkbox" id="checkbox_d3" class="chk_4" checked=""><label for="checkbox_d3"></label></span>
-							
+								<!-- 是否上架 -->
+								<td class="t_1" id="diansj">
+									{if condition="$v.goods_status eq '1'"}
+										<span style="color:green" val="{$v['goods_id']}">√</span>
+									{else /} 
+										<span style="color:#F00"  val="{$v['goods_id']}">×</span>
+									{/if}
 								</td>
 
-
-								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;
-								<span><input type="checkbox" id="checkbox_d3" class="chk_4" checked=""><label for="checkbox_d3"></label></span>
+								<!-- 是否热销 -->
+								<td class="t_1" id="dianrm">&nbsp;&nbsp;&nbsp;&nbsp;
+									{if condition="$v.is_hot eq '1'"}
+										<span style="color:green" val="{$v['goods_id']}">√</span>
+									{else /} 
+										<span style="color:#F00"  val="{$v['goods_id']}">×</span>
+									{/if}
 								</td>
 
 
@@ -153,6 +160,47 @@
       $(window).attr('location',"/admin/index/goodsdel?id="+id)
       //window.location.href();
     };
+  })
+
+  // 商品是否上架---即点即改
+  $(document).on('click','#dianrm',function(){
+  		var obj = $(this);
+  		var status  = obj.children('span').text();
+		var id  = obj.children('span').attr('val'); 
+		$.ajax({
+			url:"{:url('admin/index/goodsSaverm')}",
+			data:{status:status,id:id},
+			dataType:'json',
+			success:function(result)
+			{
+				if (result.statu == 'true') {
+					obj.children('span').html('<span style="color:#F00" val="'+id+'">×</span>');
+				} else {
+					obj.children('span').html('<span style="color:green" val="'+id+'">√</span>');
+				}
+			}
+		})
+  })
+
+
+  // 商品是否热卖---即点即改
+  $(document).on('click','#diansj',function(){
+  		var obj = $(this);
+  		var status  = obj.children('span').text();
+		var id  = obj.children('span').attr('val'); 
+		$.ajax({
+			url:"{:url('admin/index/goodsSave')}",
+			data:{status:status,id:id},
+			dataType:'json',
+			success:function(result)
+			{
+				if (result.statu == 'true') {
+					obj.children('span').html('<span style="color:#F00" val="'+id+'">×</span>');
+				} else {
+					obj.children('span').html('<span style="color:green" val="'+id+'">√</span>');
+				}
+			}
+		})
   })
 
 </script>
