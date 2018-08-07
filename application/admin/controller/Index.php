@@ -106,11 +106,13 @@ class Index extends Controller
 		$request = Request::instance();
 		$data = $request->post();
 		$file = $request->file('goods_img');
-    	$info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
-    	if ($info) {
-    		$files = DS . 'uploads' . DS . $info->getSaveName();
-    	}
-    	$data['goods_img'] = $files;
+		if (!empty($file)) {
+			$info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+	    	if ($info) {
+	    		$files = DS . 'uploads' . DS . $info->getSaveName();
+	    	}
+	    	$data['goods_img'] = $files;
+		}
     	$data['goods_time'] = time();
     	unset($data['__token__']);
     	// var_dump($data);die;
@@ -438,15 +440,16 @@ class Index extends Controller
 	{
 		$request = Request::instance();
 		$file = $request->file('brand_img');
-		$move = $file->move('uploads');
-
-		$name = $move->getSaveName();
-		$imgp = str_replace("\\", '/', $name);
+		if (!empty($file)) {
+			$move = $file->move('uploads');
+			$name = $move->getSaveName();
+			$imgp = str_replace("\\", '/', $name);
+			$data['brand_img'] = "uploads/".$imgp;
+		}
 		$data = $request->post();
 		$id = $data['brand_id'];
 		$time = date("Y-m-d H:i:s");
 		$data['create_time'] = $time;
-		$data['brand_img'] = "uploads/".$imgp;
 		$brand = new Brand;
 		$res = $brand->upData($id,$data);
 		if($res){
@@ -482,10 +485,10 @@ class Index extends Controller
 	 *@author  童立京
 	 *@time    2018/8/7
 	 */
-	public function adminDel()
-	{
-		echo '123';
-	}
+	// public function adminDel()
+	// {
+	// 	echo '123';
+	// }
 
 }
 ?>

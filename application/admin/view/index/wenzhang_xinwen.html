@@ -88,10 +88,10 @@
 							<tbody>
 							{foreach $data as $v}
 							<tr>
-								<!-- <td class="t_1">
+								<td class="t_1">
 								<a href="" class="avatar">
 								<img src="{$v.goods_img}" width="90" height="65"/></a>
-								</td> -->
+								</td>
 								<td class="t_1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_name}</a></td>
 								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_price}</td>
 								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_unit}</td>
@@ -110,9 +110,8 @@
 
 								<td class="t_1"><?php echo date('Y-m-d H:i:s',$v['goods_time'])?></td>
 								<td class="t_4"><div class="btn">
-								<a class="Top">置顶</a>
-								<a href="javascript:;" class="modify">修改</a>
-								<a href="{:url('admin/index/adminDel')}" class="delete" id='{$v.goods_id}' name="del">删除</a>
+								<a href="/admin/index/goods_up?id={$v.goods_id}" class="modify">修改</a>
+								<a class="delete" id='{$v.goods_id}' name="del">删除</a>
 								</div></td>
 							</tr>
 							{/foreach}	
@@ -148,13 +147,13 @@
 
 <script type="text/javascript" src="/admin/js/zxxFile.js"></script>
 <script>
-	// $("a[name=del]").on('click',function(){
- //    if (confirm('确定要删除么')) {
- //      var id = $(this).attr("id");
- //      $(window).attr('location',"/admin/index/goodsdel?id="+id)
- //      //window.location.href();
- //    };
- //  })
+	$("a[name=del]").on('click',function(){
+    if (confirm('确定要删除么')) {
+      var id = $(this).attr("id");
+      $(window).attr('location',"/admin/index/goodsdel?id="+id)
+      //window.location.href();
+    };
+  })
 
 </script>
 
