@@ -90,6 +90,57 @@ class Index extends Controller
 		}
 	}
 
+	/**
+	 *@content  商品回收 删除渲染页面
+	 *@author   牛勇港
+	 *@return   mixed
+	 *@time     2018/8/8
+	 */
+	public function wenzhang_hui()
+	{
+		$model = new goods;
+		$data = $model->where(['goods_del'=>0])->order('goods_id',"desc")->paginate(5);
+		$this->assign('data',$data);
+		return $this->fetch();
+	}
+
+	/**
+	 *@content  还原商品
+	 *@author   牛勇港
+	 *@return   mixed
+	 *@time     2018/8/8
+	 */
+	public function goods_up_date()
+	{
+		$request =Request::instance();
+		$id = $request->get('id');
+		$model = new goods;
+		$data = $model->where('goods_id',$id)->update(['goods_del'=>1]);
+		if ($data) {
+			$this->success('还原成功',"admin/index/wenzhang_xinwen"); 
+		}
+	}
+
+	/**
+	 *@content  确定删除
+	 *@author   牛勇港
+	 *@return   mixed
+	 *@time     2018/8/8
+	 */
+	public function goods_del_id()
+	{
+		$request =Request::instance();
+		$id = $request->get('id');
+		$model = new goods;
+		$data = $model->where('goods_id',$id)->delete();
+		if ($data) {
+			$this->success('成功删除',"admin/index/wenzhang_hui");
+		}else{
+			$this->success('删除失败',"admin/index/wenzhang_hui");
+		}
+	}
+
+
 	//商品修改页面
 	public function goods_up()
 	{
@@ -131,11 +182,12 @@ class Index extends Controller
 		$request =Request::instance();
     	$search = $request->post();
     	$file = $request->file('goods_img');
-    	$info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
-    	if ($info) {
-    		$data = DS . 'uploads' . DS . $info->getSaveName();
+    	$info = $file->validate(['size'=>8242880,'ext'=>'jpg,jpeg,png,bmp,gif'])->move(ROOT_PATH . 'public' . DS . 'uploads' .DS . 'user');
+    	if($info){
+    		$pic = new goods;
+ 			$data = $pic->thumbImage($file,$info);
+ 			 $search['goods_img'] = $data;
     	}
-    	$search['goods_img'] = $data;
     	$search['goods_time'] = time();
     	unset($search['__token__']);
 		$model = new goods;

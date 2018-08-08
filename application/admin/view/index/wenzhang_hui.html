@@ -58,25 +58,11 @@
 				<div class="ctab-Main-title">
 					<ul class="clearfix">
 						<li class="cur"><a href="wenzhang_xinwen.html">商品详情</a></li>
-						<!-- <li><a href="wenzhang_kehu.html">客户见证</a></li>
-						<li><a href="wenzhang_remen.html">热门产品</a></li> -->
-						<!-- <li><a href="wenzhang_aboutus.html">关于我们</a></li>
-						<li><a href="wenzhang_lianxi.html">联系方式</a></li> -->
+						
 					</ul>
 				</div>
 				<div class="ctab-Mian-cont">
-					<div class="Mian-cont-btn clearfix">
-					<!-- 新增 商品回收站 -->
-						<div class="operateBtn">
-							<a href="{:url('admin/index/wenzhang_add')}" class="greenbtn publish">添加商品</a>
-							<a href="javascript:;" class="greenbtn add sp-add">添加分类</a>
-							<a href="{:url('admin/index/wenzhang_hui')}" class="greenbtn publish">商品回收站</a>
-						</div>
-						<div class="searchBar">
-							<input type="text" id="" value="" class="form-control srhTxt" placeholder="输入标题关键字搜索">
-							<input type="button" class="srhBtn" value="">
-						</div>
-					</div>
+
 					<div class="super-label clearfix">	
 					</div>
 					<div class="Mian-cont-wrap">
@@ -98,28 +84,21 @@
 								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_price}</td>
 								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_unit}</td>
 								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_nums}</td>
-								<!-- 是否上架 -->
-								<td class="t_1" id="diansj">
-									{if condition="$v.goods_status eq '1'"}
-										<span style="color:green" val="{$v['goods_id']}">√</span>
-									{else /} 
-										<span style="color:#F00"  val="{$v['goods_id']}">×</span>
-									{/if}
+
+								<td class="t_1">
+								<span><input type="checkbox" id="checkbox_d3" class="chk_4" checked=""><label for="checkbox_d3"></label></span>
+							
 								</td>
 
-								<!-- 是否热销 -->
-								<td class="t_1" id="dianrm">&nbsp;&nbsp;&nbsp;&nbsp;
-									{if condition="$v.is_hot eq '1'"}
-										<span style="color:green" val="{$v['goods_id']}">√</span>
-									{else /} 
-										<span style="color:#F00"  val="{$v['goods_id']}">×</span>
-									{/if}
+
+								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;
+								<span><input type="checkbox" id="checkbox_d3" class="chk_4" checked=""><label for="checkbox_d3"></label></span>
 								</td>
 
 
 								<td class="t_1"><?php echo date('Y-m-d H:i:s',$v['goods_time'])?></td>
 								<td class="t_4"><div class="btn">
-								<a href="/admin/index/goods_up?id={$v.goods_id}" class="modify">修改</a>
+								<a href="/admin/index/goods_up_date?id={$v.goods_id}" class="modify">还原商品</a>
 								<a class="delete" id='{$v.goods_id}' name="del">删除</a>
 								</div></td>
 							</tr>
@@ -141,68 +120,17 @@
 	</div>
 	<!--content E-->
 	
-	<div class="layuiBg"></div><!--公共遮罩-->
-	<!--点击修改弹出层-->
-	
-	<!--点击添加分类弹出-->
-	<div class="addFeileibox layuiBox">
-		<div class="layer-title clearfix"><h2>添加分类</h2><span class="layerClose"></span></div>
-		<div class="layer-content">
-			<div class="aFllink clearfix"><span>上级栏目：</span><h5>商品分类</h5></div>
-			<div class="aFllink clearfix"><span>二级栏目：</span><input type="text" value=""></div>
-			<div class="aFlBtn"><input type="button" value="保存" class="saveBtn"></div>
-		</div>
-	</div>
+
+
 
 <script type="text/javascript" src="/admin/js/zxxFile.js"></script>
 <script>
 	$("a[name=del]").on('click',function(){
     if (confirm('确定要删除么')) {
       var id = $(this).attr("id");
-      $(window).attr('location',"/admin/index/goodsdel?id="+id)
+      $(window).attr('location',"/admin/index/goods_del_id?id="+id)
       //window.location.href();
     };
-  })
-
-  // 商品是否上架---即点即改
-  $(document).on('click','#dianrm',function(){
-  		var obj = $(this);
-  		var status  = obj.children('span').text();
-		var id  = obj.children('span').attr('val'); 
-		$.ajax({
-			url:"{:url('admin/index/goodsSaverm')}",
-			data:{status:status,id:id},
-			dataType:'json',
-			success:function(result)
-			{
-				if (result.statu == 'true') {
-					obj.children('span').html('<span style="color:#F00" val="'+id+'">×</span>');
-				} else {
-					obj.children('span').html('<span style="color:green" val="'+id+'">√</span>');
-				}
-			}
-		})
-  })
-
-
-  // 商品是否热卖---即点即改
-  $(document).on('click','#diansj',function(){
-  		var obj = $(this);
-  		var status  = obj.children('span').text();
-		var id  = obj.children('span').attr('val'); 
-		$.ajax({
-			url:"{:url('admin/index/goodsSave')}",
-			data:{status:status,id:id},
-			dataType:'json',
-			success:function(result)
-			{
-				if (result.statu == 'true') {
-					obj.children('span').html('<span style="color:#F00" val="'+id+'">×</span>');
-				} else {
-					obj.children('span').html('<span style="color:green" val="'+id+'">√</span>');
-				}
-			}
-		})
   })
 
 </script>

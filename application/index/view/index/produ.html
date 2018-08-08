@@ -10,32 +10,7 @@
 </head>
 <body>
 <!--顶部导航-->
-<div class="headr">
-    <div class="heard-con">
-        <img src="/index/images/logo.jpg" style="margin-top: 7px;float: left;position: absolute" width="100px">
-        <div class="headr-nav">
-            <ul>
-                <li><a href="{:url('index/index/index')}">首页</a> </li>
-                <li><a href="{:url('index/index/hot')}">蔬果热卖</a> </li>
-                <li><a href="{:url('index/index/produ')}"style="color: #4AB344"><span style="color: #4AB344">全部产品</span></a> </li>
-                <li><a href="{:url('index/index/consult')}">最新资讯</a></li>
-                <li><a href="{:url('index/index/touch')}">联系我们</a> </li>
-            </ul>
-            <div class="sptopfoot">
-                <div class="spbottom"  >
-                </div>
-            </div>
-        </div>
-        <div class="headr-right">
-            <i class="iconfont" style="font-size: 16px;margin-right: 10px">&#xe7d5;</i>
-            我的购物车 ∨
-            <div class="hr-car">
-                <i class="iconfont"style="font-size: 40px;margin-right: 10px">&#xe633;</i>
-                您的购物车内暂时没有任何产品。
-            </div>
-        </div>
-    </div>
-</div>
+{include file="../application/index/view/layout/header.html"}
 <!--顶部导航结束-->
 <!--banner图片-->
 <div class="her-banner">
@@ -733,53 +708,7 @@
     <!--产品推荐结束-->
 </div>
 <!--底部-->
-<div class="footer">
-    <div class="ft-con">
-        <div class="ft-top">
-            <img src="/index/images/fot-1.jpg">
-        </div>
-        <div class="ft-bo">
-            <div class="ft-b">
-                <h3>服务保障</h3>
-                <p>正品保证</p>
-                <p>7天无理由退换</p>
-                <p>退货返运费</p>
-                <p>7X15小时客户服务</p>
-
-            </div>
-            <div class="ft-b">
-                <h3>支付方式</h3>
-                <p>公司转账</p>
-                <p>货到付款</p>
-                <p>在线支付</p>
-                <p>分期付款</p>
-
-            </div>
-            <div class="ft-b">
-                <h3>商家服务</h3>
-                <p>商家入驻</p>
-                <p>培训中心</p>
-                <p>广告服务</p>
-                <p>服务市场</p>
-
-            </div>
-            <div class="ft-b">
-                <h3>服务保障</h3>
-                <p>免运费</p>
-                <p>海外配送</p>
-                <p>EMS</p>
-                <p>211限时达</p>
-
-            </div>
-
-        </div>
-        <div class="banq">
-            <p>©2016 果然新鲜 版权所有</p>
-            <p>手机版 | 本站使用<span><img src="images/ft.jpg"></span>凡科建站搭建 | 管理登录</p>
-        </div>
-
-    </div>
-</div>
+{include file="../application/index/view/layout/bottom.html"}
 </body>
 <script src="js/produ.js"></script>
 </html>
