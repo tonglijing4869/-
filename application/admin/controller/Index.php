@@ -8,6 +8,7 @@ use app\admin\validate\Rule;
 use think\Request;
 use think\Session;
 use app\admin\model\goods;
+use think\Collection;
 class Index extends Controller
 {
 	/**
@@ -73,6 +74,37 @@ class Index extends Controller
 		$data = $model->where(['goods_del'=>1])->order('goods_id',"desc")->paginate(5);
 		$this->assign('data',$data);
 		return $this->fetch();
+	}
+
+	/**
+	 *@content 后台页面--多商品图片添加渲染页面 
+	 *@author  童立京
+	 *@return  mixed
+	 *@time    2018/8/8
+	 */
+	public function imgs()
+	{
+		$id = $this->request->get('id');
+		$this->assign('id',$id);
+		return $this->fetch();
+	}
+
+	/**
+	 *@content 后台页面--多商品图片添加
+	 *@author  童立京
+	 *@return  mixed
+	 *@time    2018/8/8
+	 */
+	public function imgs_do()
+	{
+		$file = request()->file('goods_img');
+		$info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+		// if ($info) {
+		// 	 $files = DS . 'uploads' . DS . $info->getSaveName();
+		// }
+	   
+		echo "<pre>";
+		print_r($info);die;
 	}
 
 	/**

@@ -91,7 +91,7 @@
 							{foreach $data as $v}
 							<tr>
 								<td class="t_1">
-								<a href="" class="avatar">
+								<a href="{:url('admin/index/imgs')}?id={$v.goods_id}" class="avatar">
 								<img src="__ROOT__/{$v.goods_img}" width="90" height="65"/></a>
 								</td>
 								<td class="t_1"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_name}</a></td>
