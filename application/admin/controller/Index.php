@@ -9,22 +9,9 @@ use think\Request;
 use think\Session;
 use app\admin\model\goods;
 use think\Collection;
-class Index extends Controller
+use app\admin\model\Power;
+class Index extends Commons
 {
-	/**
-	 *@content 方非法登录
-	 *@return  mixed
-	 *@author  童立京
-	 *@time    2018/8/6
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		$name = Session::get('name');
-		if (empty($name)) {
-			$this->success('请先登录',('login/login'));
-		}
-	}
 	/**
 	 *@content 后台页面 
 	 *@return  mixed
@@ -97,14 +84,42 @@ class Index extends Controller
 	 */
 	public function imgs_do()
 	{
-		$file = request()->file('goods_img');
-		$info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
-		// if ($info) {
-		// 	 $files = DS . 'uploads' . DS . $info->getSaveName();
+		$str = $this->request->post();
+		$id = $str['goods_id'];
+		$content = $str['goods_content'];
+		$files = request()->file('goods_img');
+		$data1 = '';
+		foreach ($files as $file) {
+			$info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+			if ($info) {
+				$data1 .= DS . 'uploads' . DS . $info->getSaveName().',';
+				$data['imgs'] = $data1;
+			}
+		}
+		$data2 = substr($data1, 0,strlen($data1)-1);
+		//这种方法是图片路径分开存的，缺点是造成其他栏位重复
+		// $data2 = explode(',', $data2);
+		// foreach ($data2 as $value) {
+		// 	$arr = array(
+		// 		'goods_id' => $id,
+		// 		'goods_img' => $value,
+		// 		'goods_content' => $content,
+		// 		'addtime'   => time(),
+		// 	);
+		// 	$result = Db::name('grx_goodscontent')->insert($arr);
 		// }
-	   
-		echo "<pre>";
-		print_r($info);die;
+		$arr = array(
+				'goods_id' => $id,
+				'goods_img' => $data2,
+				'goods_content' => $content,
+				'addtime'   => time(),
+			);
+			$result = Db::name('grx_goodscontent')->insert($arr);
+		if ($result) {
+			$this->success('添加成功',"admin/index/wenzhang_xinwen"); 
+		} else {
+			$this->success('添加失败',"admin/index/wenzhang_xinwen"); 
+		}
 	}
 
 	/**
@@ -343,6 +358,9 @@ class Index extends Controller
 	 */
 	public function zixun_team()
 	{
+		$power = new Power;
+		$role = $power->selectRole();
+		$this->assign('res',$role);
 		return $this->fetch();
 	}
 
@@ -355,22 +373,46 @@ class Index extends Controller
 	public function addadmin()
 	{
 		$data = $this->request->post();
+		$arrkey = [];
+		foreach ($data as $key => $value) {
+			$arrkey[]=$key;
+		}
+		
 		if ($data['password'] != $data['password2']) {
-			die('请确认前后密码一致');
+			$this->error('请确认前后密码一致');
 		}
 		if (empty($data['name'])) {
-			die('用户名不能为空');
+			$this->error('用户名不能为空');
 		}
 		if (empty($data['password'])) {
-			die('密码不能为空');
+			$this->error('密码不能为空');
 		}
+		if (!in_array('role', $arrkey)) {
+			$this->error('请选择角色');
+		}
+		
 		$pwd = $data['password'];
 		$data['password'] = md5($pwd);
 		$data['addtime'] = time();
-		unset($data['password2']);
+		$datas = [];
+		foreach ($data as $key => $value) {
+			$datas['name'] = $data['name'];
+			$datas['password'] = $data['password'];
+			$datas['addtime'] = $data['addtime'];
+		}
+		
 		$user = new Zixun();
-		$info = $user->add($data);
-		if ($info) {
+		$info = $user->add($datas);
+
+        $lastId = Db::name('admin')->getLastInsID();
+		
+		$role = $data['role'];
+		$arr = [];
+		foreach ($role as $key => $val) {
+			$arr[]= array("id"=>$lastId,"role_id"=>$val);
+		}
+		$infos = Db::name('admin_role')->insertAll($arr);
+		if ($infos) {
 			$this->success('添加成功',('index/muban_guanli'));
 		}else{
 			$this->success('添加失败',('index/addadmin'));
@@ -613,6 +655,114 @@ class Index extends Controller
 	// {
 	// 	echo '123';
 	// }
+
+	public function role(){
+    	$show = Db::table('role')->select();
+    	$this->assign('show',$show);
+
+    	return $this->fetch();
+    }
+
+    public function roleAdd_do()
+    { 
+		$data = $this->request->post();
+		$res = Db::table('role')->insert($data);
+		if ($res) {
+			$this->redirect('Index/role');
+		}else{
+			$this->redirect('Index/role_add');
+		}
+	}
+
+    public function roleAdd()
+    {
+        $role_name = $this->request->post('rolename');
+		$res = Db::table('role')->where('role_name',$role_name)->find();
+		if ($res) {
+			echo 0;
+		}else{
+			echo 1;
+		}
+	}
+
+	public function role_save()
+	{
+		$id = $this->request->get('id');
+		$status = $this->request->get('status');
+		if ($status == '×') {
+			$result = Db::table('role')->where('role_id',$id)->update(['is_show' => '1']);
+			echo json_encode(array('statu'=>'false','mesg'=>'修改成功'));
+		} else {
+			$result = Db::table('role')->where('role_id',$id)->update(['is_show' => '2']);
+			echo json_encode(array('statu'=>'true','mesg'=>'修改成功'));
+		} 
+	}
+
+	public function role_add()
+	{
+		return $this->fetch();
+	}
+
+	public function recu($data,$path=0,$f=1)
+	{
+		static $arr=array();
+		foreach ($data as $key => $val) {
+			if($val['pid']==$path){
+				$val['f']=$f;
+				$arr[]=$val;
+				$this->recu($data,$val['power_id'],$f+1);
+			}
+		}
+		
+        return $arr;
+	}
+
+	public function power()
+	{
+		$power = new Power;
+		$data = $power->selectPower(); 
+		$show=$this->recu($data);
+    	$this->assign('show',$show);
+
+		return $this->fetch();
+	} 
+
+    public function power_add()
+	{
+		$power = new Power;
+		$data = $power->selectPower(); 
+		$res=$this->recu($data);
+		$datas = $power->selectRole();
+		$this->assign('res',$res);
+		$this->assign('datas',$datas);
+
+		return $this->fetch();
+	}
+
+	public function power_addDo()
+	{
+		$data = $this->request->post();
+		$datas = [];
+		foreach ($data as $key => $value) {
+			$datas['power_name'] = $data['power_name'];
+			$datas['controller_name'] = $data['controller_name'];
+			$datas['action_name'] = $data['action_name'];
+			$datas['pid'] = $data['pid'];
+		}
+		$infos = Db::table('power')->insert($datas);
+		$lastId = Db::name('power')->getLastInsID();
+		$role = $data['role'];
+		$arr = [];
+		foreach ($role as $key => $val) {
+			$arr[]= array("power_id"=>$lastId,"role_id"=>$val);
+		}
+		$infos = Db::name('role_power')->insertAll($arr);
+		if ($infos) {
+			$this->success('添加成功',('index/power'));
+		}else{
+			$this->success('添加失败',('index/power_add'));
+		}
+	}
 
 }
 ?>

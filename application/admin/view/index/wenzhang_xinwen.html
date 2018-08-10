@@ -99,20 +99,20 @@
 								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_unit}</td>
 								<td class="t_1">&nbsp;&nbsp;&nbsp;&nbsp;{$v.goods_nums}</td>
 								<!-- 是否上架 -->
-								<td class="t_1" id="diansj">
+								<td class="t_1" id="diansj">&nbsp;&nbsp;&nbsp;&nbsp;
 									{if condition="$v.goods_status eq '1'"}
-										<span style="color:green" val="{$v['goods_id']}">√</span>
+										<span style="color:green;font-size:200%;font-weight: bold" val="{$v['goods_id']}">√</span>
 									{else /} 
-										<span style="color:#F00"  val="{$v['goods_id']}">×</span>
+										<span style="color:#F00;font-size:200%;font-weight: bold"  val="{$v['goods_id']}">×</span>
 									{/if}
 								</td>
 
 								<!-- 是否热销 -->
 								<td class="t_1" id="dianrm">&nbsp;&nbsp;&nbsp;&nbsp;
 									{if condition="$v.is_hot eq '1'"}
-										<span style="color:green" val="{$v['goods_id']}">√</span>
+										<span style="color:green;font-size:200%;font-weight: bold" val="{$v['goods_id']}">√</span>
 									{else /} 
-										<span style="color:#F00"  val="{$v['goods_id']}">×</span>
+										<span style="color:#F00;font-size:200%;font-weight: bold"  val="{$v['goods_id']}">×</span>
 									{/if}
 								</td>
 
@@ -164,7 +164,7 @@
     };
   })
 
-  // 商品是否上架---即点即改
+  // 商品是否热卖---即点即改
   $(document).on('click','#dianrm',function(){
   		var obj = $(this);
   		var status  = obj.children('span').text();
@@ -185,7 +185,7 @@
   })
 
 
-  // 商品是否热卖---即点即改
+  // 商品是否上架---即点即改
   $(document).on('click','#diansj',function(){
   		var obj = $(this);
   		var status  = obj.children('span').text();

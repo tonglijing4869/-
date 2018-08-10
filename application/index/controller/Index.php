@@ -3,9 +3,11 @@ namespace app\index\controller;
 
 use think\Db;
 use app\index\model\Goods;
-// use app\admin\model\goods;
+use app\index\model\Grx_goods;
+use app\index\model\Zixun;
 use think\Controller;
 use think\Request;
+use think\Session;
 
 class Index extends Controller
 {
@@ -16,11 +18,18 @@ class Index extends Controller
 	 *@time    2018-8-1
 	 */
     public function index()
-    {/*
-        $model = new goods;*/
-        $data = Db::table('grx_goods')->where(['goods_del'=>1])->limit(6)->order('goods_id',"desc")->select();
+    {
+        $name = Session::get('user_name');
+        $this->assign('name',$name);
+        $data = Db::table('grx_goods')->where(['goods_status'=>1])->limit(6)->order('goods_id',"desc")->select();
         $this->assign('data',$data);
         return $this->fetch('index');
+    }
+
+    public function unsetsession()
+    {
+        Session::delete('user_name');
+        $this->success('注销成功，请登录',('index/index/index'),'','1');
     }
 
     /**
@@ -31,6 +40,10 @@ class Index extends Controller
 	 */
     public function hot()
     {
+        $name = Session::get('user_name');
+        $data = Db::table('grx_goods')->where(['is_hot'=>1])->limit(16)->order('goods_id',"desc")->paginate(16);
+        $this->assign('data',$data);
+        $this->assign('name',$name);
     	return $this->fetch('hot');
     }
 
@@ -42,6 +55,13 @@ class Index extends Controller
 	 */
     public function produ()
     {
+        $name = Session::get('user_name');
+        $this->assign('name',$name);
+        $user = new Grx_goods();
+        $data =$user->pages();
+        $page = $data->render();
+        $this->assign('data',$data);
+        $this->assign('page',$page);
     	return $this->fetch('produ');
     }
 
@@ -53,10 +73,28 @@ class Index extends Controller
 	 */
     public function orange()
     {
+        $name = Session::get('user_name');
+        $this->assign('name',$name);
         $id  = $this->request->get('id');
         $result = Db::table('grx_goods')->where('goods_id',$id)->find(); 
+        $data = Db::table('grx_goodscontent')->where('goods_id',$id)->find(); 
+        $imgs = $data['goods_img']; 
+        $imgs = explode(',', $imgs);
+        $this->assign('imgs',$imgs);
         $this->assign('result',$result);
     	return $this->fetch('orange');
+    }
+
+    /**
+     *@content 前台商城--用于判断用户是否登录
+     *@author  童立京
+     *@return  json
+     *@time    2018/8/9
+     */
+    public function userStatus()
+    {
+        $name = Session::get('user_name');
+        echo json_encode($name);
     }
 
 
@@ -68,6 +106,21 @@ class Index extends Controller
 	 */
     public function consult()
     {
+        $name = Session::get('user_name');
+        $this->assign('name',$name);
+        $user = new Zixun();
+        $data =$user->pages();
+        $page = $data->render();
+        // $arr = $data->toArray();
+        // foreach ($arr['data'] as $key => $value) {
+        //     $time = $value['time'];
+        //     $date = explode('-', $time);
+            
+        // }
+        // print_r($date);
+        // die;
+        $this->assign('data',$data);
+        $this->assign('page',$page);
     	return $this->fetch('consult');
     }
 
@@ -80,6 +133,8 @@ class Index extends Controller
 	 */
     public function touch()
     {
+        $name = Session::get('user_name');
+        $this->assign('name',$name);
     	return $this->fetch('touch');
     }
 

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d"><head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>角色添加</title>
+	<link rel="stylesheet" href="/admin/css/base.css">
+	<link rel="stylesheet" href="/admin/css/page.css">
+	<!--[if lte IE 8]>
+	<link href="css/ie8.css" rel="stylesheet" type="text/css"/>
+	<![endif]-->
+	<script type="text/javascript" src="/admin/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/admin/js/main.js"></script>
+	<script type="text/javascript" src="/admin/js/modernizr.js"></script>
+	<!--[if IE]>
+	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+
+<body style="background: #f6f5fa;">
+	<!--content S-->
+	<div class="super-content">
+		<div class="superCtab">
+			<div class="ctab-title clearfix"><h3>添加角色</h3></div>
+		</div>
+		<!--main-->
+	<form action="{:url('admin/index/roleAdd_do')}" method="post">
+		<table border="0" cellspacing="0" cellpadding="0" class="defaultTable defaultTable2">
+			<tbody>
+				<tr>
+					<td class="t_1">角色名称:</td>
+					<td class="t_4">
+						<input type="text" id="role_name" name="role_name"><span id="rolename_info"></span>
+					</td>
+				</tr>
+				<tr>
+					<td class="t_1">是否启用：</td>
+					<td class="t_4">
+						<input type="radio" value="1" name="is_show" checked="">是
+						<input type="radio" value="2" name="is_show">否
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+		<center>
+			<div class="pub-btn">
+				<input type="submit" value="添加角色" class="saveBtn">
+			</div>
+		</center>
+	</form>
+	</div>
+	<!--content E-->
+</body></html>
+<script src="/admin/js/jquery.min.js"></script>
+<script>
+
+	var state = 0
+	$(document).on("blur","#role_name",function(){
+
+		var rolename = $('#role_name').val();
+		
+		if (rolename == '') {
+
+			$('#rolename_info').html('角色名不能为空').css('color','red');
+
+			return false;
+		};
+
+		$.ajax({
+			type:"post",
+			url:"{:url('admin/powers/roleAdd')}",
+			data:{rolename:rolename},
+			success:function(a){
+				if (a == 0) {
+					$('#rolename_info').empty();
+					$('#rolename_info').html('角色名已存在').css('color','red')
+				}else{
+					$('#rolename_info').html('√').css('color','green')
+				}
+
+				if (a == 1) {
+					state = 1;
+				}else{
+					state = 0;
+				}
+			}
+
+
+		})
+
+	})
+
+	$(document).on('click',"#submit",function(){
+		if (state == 1) {
+			return true;
+		}else{
+			return false;
+		}
+	})
+
+
+</script>

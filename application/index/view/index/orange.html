@@ -87,10 +87,10 @@
                 </div>
             </div>
             <div class="fk-pd5MallActBtns">
-                <div class="buttn">
+                <div class="buttn" id="gwc" name="{$result.goods_img}">
                     加入购物车
                 </div>
-                <div class="buttn butto">
+                <div class="buttn butto" id="buy">
                     立即购买
                 </div>
 
@@ -122,10 +122,10 @@
         </div>
         <div class="bd">
             <div class="bd1"style="display: block">
-                <img src="/index/images/or-1.png">
-                <img src="/index/images/or-2.png">
-                <img src="/index/images/or-3.png">
-                <img src="/index/images/or-4.png">
+                {volist name="imgs" id="v"}
+                    <img src="{$v}">
+                {/volist}
+                 <!-- <img src="/index/images/or-1.png"> -->
             </div>
             <div class="bd1">
                 <img src="/index/images/or-5.jpg">
@@ -145,103 +145,26 @@
     </div>
 
 </div>
-<!--主页内容结束-->
+<!--主页内容结束
 <!--底部-->
 {include file="../application/index/view/layout/bottom.html"}
 <!--底部结束-->
-<!--弹框-->
-<div class="popup">
-    <div class="login">
-        <div class="del">×</div>
-        <div class="lg-cont">
-            <div class="lhd">
-                <ul>
-                    <li class="active">登录</li>
-                    <li>注册</li>
-                </ul>
-                <div class="lhdfoot">
-                    <div class="lhdbottom"  >
-                    </div>
-                </div>
-
-            </div>
-            <div class="lbd">
-                <div class="lbd1"style="display: block">
-                    <div id="memberLoginAcct" class="J_memberLoginItem memberLoginDialogItem">
-                        <input id="memberAcct" class="generateInput memberAcctInput" type="text" value="" placeholder="账号">
-                    </div>
-                    <div id="memberLoginPwd" class="J_memberLoginItem memberLoginDialogItem itemSpace">
-                        <input id="memberPwd" class="generateInput memberPwdInput" type="password" placeholder="密码"}>
-                    </div>
-                    <div class="loginButton loginButton">
-                        <div class="middle">登录</div>
-                    </div>
-                    <div class="bott"></div>
-                </div>
-                <div class="lbd1">
-                    <div class="msv">
-                        <div class="memberSignupItem">
-                            <div class="itemMiddle">
-                                <input type="text" placeholder="账号" >
-                            </div>
-                            <div class="itemRight">*</div>
-                        </div>
-                        <div class="memberSignupItem ">
-                            <div class="itemMiddle">
-                                <input type="password" id="memberSignupPwd" placeholder="密码" maxlength="50">
-                            </div>
-                            <div class="itemRight">*</div>
-                        </div>
-                        <div class="memberSignupItem">
-                            <div class="itemMiddle">
-                                <input type="password" id="memberSignupRepwd" placeholder="确认密码" maxlength="50">
-                            </div>
-                            <div class="itemRight">*</div>
-                        </div>
-                        <div class="memberSignupItem">
-                            <div class="itemMiddle">
-                                <input id="name" name="姓名" placeholder="姓名" class="userAddItem isCheckUAI" type="text" maxlength="50">
-                            </div>
-                            <div class="itemRight">*</div>
-                        </div>
-                        <div class="memberSignupItem">
-                            <div class="itemMiddle">
-                                <input id="email" name="邮箱" placeholder="邮箱" class="userAddItem" type="text" maxlength="50">
-                            </div>
-                            <div class="itemRight"></div>
-                        </div>
-                        <div class="memberSignupItem">
-                            <div class="itemMiddle">
-                                <input id="phone" name="电话" placeholder="电话" class="userAddItem" type="text" maxlength="50">
-                            </div>
-                            <div class="itemRight"></div>
-                        </div>
-                        <div class="memberSignupItem_remark">
-                            <div class="itemMiddle">
-                                <textarea id="memberSignupRemark" placeholder="留言" maxlength="200"></textarea>
-                            </div>
-                            <div class="itemRight"></div>
-                        </div>
-                        <div class="memberSignupItem_captcha">
-                            <div class="itemMiddle" style="float:left;width: 150px;">
-                                <input id="memberSignupCaptcha" type="text" maxlength="4" placeholder="验证码">
-                            </div>
-                            <div class="itemRightp">
-                                <img alt="" id="memberSignupCaptchaImg" class="memberSignupCaptchaImg" onclick="Site.changeCaptchaImg(this)" title="看不清，换一张" src="images/validateCode.jpg">
-                            </div>
-                        </div>
-                   </div>
-                    <div class="loginButton loginButton">
-                        <div class="middle">注册</div>
-                    </div>
-                    <div class="bott"></div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-<!--弹框结束-->
 </body>
 <script src="/index/js/orange.js"></script>
+<script>
+    $(document).on('click','.buttn',function(){
+        // var id = ;
+        $.ajax({
+            url:"{:url('index/index/userStatus')}",
+            dataType:'json',
+            success:function(result){
+                if (result) {
+                    self.location='index/index/gwc'; 
+                } else {
+                    self.location='index/login/login'; 
+                }
+            }
+        })
+    })
+</script>
 </html>

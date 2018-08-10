@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d"><head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>权限添加</title>
+	<link rel="stylesheet" href="/admin/css/base.css">
+	<link rel="stylesheet" href="/admin/css/page.css">
+	<!--[if lte IE 8]>
+	<link href="css/ie8.css" rel="stylesheet" type="text/css"/>
+	<![endif]-->
+	<script type="text/javascript" src="/admin/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/admin/js/main.js"></script>
+	<script type="text/javascript" src="/admin/js/modernizr.js"></script>
+	<!--[if IE]>
+	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+	<style>
+    	.t_4_a{height: 30px;}
+	</style>
+</head>
+
+<body style="background: #f6f5fa;">
+	<!--content S-->
+	<div class="super-content">
+		<div class="superCtab">
+			<div class="ctab-title clearfix"><h3>添加权限</h3></div>
+		</div>
+		<!--main-->
+	<form action="{:url('admin/index/power_addDo')}" method="post">
+		<table border="0" cellspacing="0" cellpadding="0" class="defaultTable defaultTable2">
+			<tbody>
+				<tr>
+					<td class="t_1">权限名称:</td>
+					<td class="t_4"><input type="text" name="power_name"></td>
+				</tr>
+				<tr>
+					<td class="t_1">选择父级权限:</td>
+					<td class="t_4">
+						<select name="pid" id="" class="t_4_a">
+						<option value="">顶级权限</option>
+						<?php foreach ($res as $key => $val): ?>
+							<option value="{$val.power_id}">
+							    {if condition="$val.f eq 1"} &nbsp;
+								{elseif condition="$val.f eq 2"/}&nbsp;&nbsp;&nbsp;
+								{else /} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								{/if}
+								
+								{$val.power_name}
+							</option>
+						<?php endforeach ?>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="t_1">控制器名称:</td>
+					<td class="t_4"><input type="text" name="controller_name"></td>
+				</tr>
+				<tr>
+					<td class="t_1">方法名称:</td>
+					<td class="t_4"><input type="text" name="action_name"></td>
+				</tr>
+				<tr>
+					<td class="t_1">选择角色：</td>
+					<td class="t_4">
+						<?php foreach ($datas as $key => $val): ?>
+                            {if condition="$key%2 eq 0 and $key neq 0"} <br> {/if}
+                            <input type="checkbox" name="role[]" value="{$val.role_id}" checked="checked">{$val.role_name}
+                        <?php endforeach ?>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<center>
+			<div class="pub-btn">
+				<input type="submit" value="添加权限" class="saveBtn">
+			</div>
+		</center>
+	</form>
+	</div>
+	<!--content E-->
+</body></html>

@@ -32,11 +32,8 @@ class Login extends Controller
 		}
         if ($arr) {
         	$all = ['name' => $name];
-            Cookie::set('all',$all,3);
 			if ($arr['password'] == $password) {
 				$allp = ['password' => $password];
-				// print_r($allp);die;
-                Cookie::set('allp',$allp,3);
 				$captcha = new Captcha();
 				if ( !$captcha->check($authcode)) {
 				    $this->redirect('Login/login');

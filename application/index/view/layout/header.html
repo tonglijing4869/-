@@ -1,5 +1,42 @@
-<!--顶部导航-->
 <div class="headr">
+    <div class="heard-con">
+        <img src="/index/images/logo.jpg" style="margin-top: 7px;float: left;position: absolute" width="100px">
+        <div class="headr-nav">
+            <ul>
+                <li><a href="index.html"style="color: #4AB344"><span style="color: #4AB344">首页</span></a> </li>
+                <li><a href="{:url('index/index/hot')}">蔬果热卖</a> </li>
+                <li><a href="{:url('index/index/produ')}">全部产品</a> </li>
+                <li><a href="{:url('index/index/consult')}">最新资讯</a></li>
+                <li><a href="{:url('index/index/touch')}">联系我们</a> </li>
+            </ul>
+            <div class="sptopfoot">
+                <div class="spbottom"  >
+                </div>
+            </div>
+        </div>
+        <div class="headr-right">
+            {if condition="$name neq ''"}
+                <a href="javascript:;">{$name}</a>
+                 &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{:url('index/index/unsetsession')}">注销</a>
+            {else /}
+                <a href="{:url('index/login/login')}">登录</a>
+                <span>/</span>
+                <a href="{:url('index/login/addlogin')}">注册</a> 
+            {/if}
+       </div>
+        <div class="headr-right">
+            <i class="iconfont" style="font-size: 16px;margin-right: 10px">&#xe7d5;</i>
+            <a href="{:url('index/index/gwc')}">我的购物车 ∨</a>
+            <div class="hr-car">
+                <i class="iconfont"style="font-size: 40px;margin-right: 10px">&#xe633;</i>
+                您的购物车内暂时没有任何产品。
+            </div>
+        </div>
+    </div>
+</div>
+<!--顶部导航-->
+<!-- <div class="headr">
     <div class="heard-con">
         <img src="/index/images/logo.jpg" style="margin-top: 7px;float: left;position: absolute" width="100px">
         <div class="headr-nav">
@@ -24,5 +61,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!--顶部导航结束-->
